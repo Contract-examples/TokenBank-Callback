@@ -25,7 +25,7 @@ contract TokenBank {
         token = IERC20(_token);
     }
 
-    function deposit(uint256 amount) public {
+    function deposit(uint256 amount) public virtual {
         // if amount is 0, revert
         if (amount == 0) {
             revert DepositTooLow();
@@ -43,7 +43,7 @@ contract TokenBank {
         emit Deposit(msg.sender, amount);
     }
 
-    function withdraw(uint256 amount) external {
+    function withdraw(uint256 amount) external virtual {
         // if amount > balance, revert
         if (amount > balances[msg.sender]) {
             revert InsufficientBalance();
@@ -62,12 +62,12 @@ contract TokenBank {
     }
 
     // Query contract balance
-    function getBalance() public view returns (uint256) {
+    function getBalance() public view virtual returns (uint256) {
         return token.balanceOf(address(this));
     }
 
     // Query specific depositor's deposit amount
-    function getDepositAmount(address depositor) public view returns (uint256) {
+    function getDepositAmount(address depositor) public view virtual returns (uint256) {
         return balances[depositor];
     }
 }
