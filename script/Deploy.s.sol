@@ -3,9 +3,10 @@ pragma solidity ^0.8.28;
 
 import "forge-std/Script.sol";
 import "forge-std/console2.sol";
-import "../src/Bank.sol";
+import "../src/TokenBank.sol";
+import "../src/SimpleToken.sol";
 
-contract BankSepoliaScript is Script {
+contract DeployTokenBankAndTokenScript is Script {
     function setUp() public { }
 
     function run() public {
@@ -14,9 +15,14 @@ contract BankSepoliaScript is Script {
 
         vm.startBroadcast(deployerPrivateKey);
 
-        Bank bank = new Bank();
+        // deploy SimpleToken
+        SimpleToken token = new SimpleToken(1_000_000 * 10 ** 18); // 1,000,000 tokens
+        console2.log("SimpleToken deployed to:", address(token));
 
-        console2.log("Bank deployed to:", address(bank));
+        // deploy TokenBank
+        TokenBank bank = new TokenBank(address(token));
+        console2.log("TokenBank deployed to:", address(bank));
+
         console2.log("Deployed by:", deployerAddress);
 
         vm.stopBroadcast();
