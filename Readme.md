@@ -18,3 +18,4 @@ https://sepolia.arbiscan.io/address/0x95291a3819e690ddf39dfa805d5b3850237b9304
 ```
 forge script script/DistributeSimpleToken.s.sol:DistributeSimpleTokenScript --rpc-url arbitrum_sepolia --broadcast -vvvv
 ```
+txhash: https://sepolia.arbiscan.io/tx/0xa19f50452a0e8fcf1cdce318ec79996ff5ba4fda73fa8893862dbe9780754712
