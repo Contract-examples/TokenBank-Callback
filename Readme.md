@@ -13,3 +13,8 @@ https://sepolia.arbiscan.io/address/0x95291a3819e690ddf39dfa805d5b3850237b9304
 TokenBankV2 deployed to: 0x8402b4A3C2e14cAd26436ff9C9432b528244a9C6
 https://sepolia.arbiscan.io/address/0x95291a3819e690ddf39dfa805d5b3850237b9304
 ```
+
+## Distribute 1000 tokens to recipient address
+```
+forge script script/DistributeSimpleToken.s.sol:DistributeSimpleTokenScript --rpc-url arbitrum_sepolia --broadcast -vvvv
+```
