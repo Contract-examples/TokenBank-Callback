@@ -16,10 +16,10 @@ contract SimpleToken is ERC20 {
         _mint(msg.sender, initialSupply);
     }
 
-    function transferWithCallback(address to, uint256 amount, bytes calldata data) public returns (bool) {
+    function transferWithCallback(address to, uint256 amount) public returns (bool) {
         _transfer(_msgSender(), to, amount);
 
-        try ITokenReceiver(to).tokensReceived(_msgSender(), amount, data) returns (bool success) {
+        try ITokenReceiver(to).tokensReceived(_msgSender(), amount) returns (bool success) {
             if (!success) {
                 revert TransferFailedForDeposit();
             }

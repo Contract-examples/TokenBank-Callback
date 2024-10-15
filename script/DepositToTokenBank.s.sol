@@ -3,7 +3,7 @@ pragma solidity ^0.8.28;
 
 import "forge-std/Script.sol";
 import "forge-std/console2.sol";
-import "../src/TokenBank.sol";
+import "../src/TokenBankV2.sol";
 import "../src/SimpleToken.sol";
 
 contract DepositToTokenBankScript is Script {
@@ -18,21 +18,17 @@ contract DepositToTokenBankScript is Script {
         vm.startBroadcast(userPrivateKey);
 
         SimpleToken token = SimpleToken(tokenAddress);
-        TokenBank bank = TokenBank(bankAddress);
+        TokenBankV2 bank = TokenBankV2(bankAddress);
 
         uint256 amountToDeposit = 10 * 10 ** 18; // deposit 10 tokens
 
-        // approve TokenBank to use tokens
-        token.approve(bankAddress, amountToDeposit);
-        console2.log("Approved TokenBank to use tokens");
-
-        // deposit tokens to TokenBank
-        bank.deposit(amountToDeposit);
-        console2.log("Deposited tokens to TokenBank");
+        // Use transferWithCallback to deposit tokens directly to TokenBankV2
+        bool success = token.transferWithCallback(bankAddress, amountToDeposit);
+        console2.log("Deposit with transferWithCallback success:", success);
 
         // check balance after deposit
         uint256 balance = bank.getDepositAmount(userAddress);
-        console2.log("User balance in TokenBank:", balance);
+        console2.log("User balance in TokenBankV2:", balance);
 
         // check bank balance
         uint256 bankBalance = bank.getBalance();

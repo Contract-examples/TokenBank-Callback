@@ -13,7 +13,7 @@ contract TokenBankV2 is TokenBank, ITokenReceiver {
 
     constructor(address _token) TokenBank(_token) { }
 
-    function tokensReceived(address from, uint256 amount, bytes calldata) external override returns (bool) {
+    function tokensReceived(address from, uint256 amount) external override returns (bool) {
         // check if the sender is the token contract
         if (msg.sender != address(token)) {
             revert NotFromTokenContract();

@@ -32,7 +32,7 @@ contract TokenBankV2Test is Test {
         token.approve(address(bank), DEPOSIT_AMOUNT);
 
         // Use transferWithCallback to deposit tokens
-        bool success = token.transferWithCallback(address(bank), DEPOSIT_AMOUNT, "");
+        bool success = token.transferWithCallback(address(bank), DEPOSIT_AMOUNT);
 
         vm.stopPrank();
 
@@ -60,7 +60,7 @@ contract TokenBankV2Test is Test {
         // First, deposit some tokens
         vm.startPrank(user1);
         token.approve(address(bank), DEPOSIT_AMOUNT);
-        token.transferWithCallback(address(bank), DEPOSIT_AMOUNT, "");
+        token.transferWithCallback(address(bank), DEPOSIT_AMOUNT);
 
         // Now withdraw half of the deposited amount
         uint256 withdrawAmount = DEPOSIT_AMOUNT / 2;
@@ -79,13 +79,13 @@ contract TokenBankV2Test is Test {
     function testFailTransferWithCallbackFromNonToken() public {
         // Try to call tokensReceived directly, which should fail
         vm.prank(user1);
-        bank.tokensReceived(user1, DEPOSIT_AMOUNT, "");
+        bank.tokensReceived(user1, DEPOSIT_AMOUNT);
     }
 
     function testFailWithdrawTooMuch() public {
         vm.startPrank(user1);
         token.approve(address(bank), DEPOSIT_AMOUNT);
-        token.transferWithCallback(address(bank), DEPOSIT_AMOUNT, "");
+        token.transferWithCallback(address(bank), DEPOSIT_AMOUNT);
 
         // Try to withdraw more than deposited
         bank.withdraw(DEPOSIT_AMOUNT + 1);
