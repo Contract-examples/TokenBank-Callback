@@ -21,7 +21,7 @@ forge script script/DistributeSimpleToken.s.sol:DistributeSimpleTokenScript --rp
 txhash: https://sepolia.arbiscan.io/tx/0xa19f50452a0e8fcf1cdce318ec79996ff5ba4fda73fa8893862dbe9780754712
 
 
-## Deposit 1 token to Tokenbank
+## Deposit 1 token using callback to Tokenbank
 ```
 forge script script/DepositToTokenBank.s.sol:DepositToTokenBankScript --rpc-url arbitrum_sepolia --broadcast -vvvv
 ```
