@@ -16,15 +16,31 @@ contract SimpleToken is ERC20 {
         _mint(msg.sender, initialSupply);
     }
 
+    function _isContract(address account) internal view returns (bool) {
+        // This method relies on extcodesize, which returns 0 for contracts in
+        // construction, since the code is only stored at the end of the
+        // constructor execution.
+        uint256 size;
+        assembly {
+            size := extcodesize(account)
+        }
+        return size > 0;
+    }
+
     function transferWithCallback(address to, uint256 amount) public returns (bool) {
         _transfer(_msgSender(), to, amount);
 
-        try ITokenReceiver(to).tokensReceived(_msgSender(), amount) returns (bool success) {
-            if (!success) {
-                revert TransferFailedForDeposit();
+        // check if the receiver is a contract
+        // if so, call the tokensReceived function
+        // if it is not a contract, do nothing
+        if (_isContract(to)) {
+            try ITokenReceiver(to).tokensReceived(_msgSender(), amount) returns (bool success) {
+                if (!success) {
+                    revert TransferFailedForDeposit();
+                }
+            } catch {
+                revert TransferFailedForDeposit2();
             }
-        } catch {
-            revert TransferFailedForDeposit2();
         }
 
         return true;
